@@ -15,8 +15,6 @@ document.querySelectorAll('.nav-menu').forEach((menu) => {
     menu.parentElement?.querySelector('.brand'),
     document.querySelector('main'),
     document.querySelector('footer'),
-    document.querySelector('.phone-button'),
-    document.querySelector('.whatsapp-button'),
   ].filter(Boolean);
   const inertSupported = 'inert' in HTMLElement.prototype;
   let restoreFocus = false;
