@@ -1,0 +1,75 @@
+name: Remove Search Console verification meta
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove google-site-verification from HTML pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path("beylikduzumasajsalonu")
+          html_files = sorted(root.glob("*.html"))
+          if not html_files:
+              raise SystemExit("No HTML files found")
+
+          verification_value = "mJvU4cL8NtFHmsfDdDlir9eM406Hj0tHOQUpm2J_Vm0"
+          current_tag = "GT-M6XWMHWS"
+          pattern = re.compile(
+              r'''\s*<meta\s+name=["']google-site-verification["']\s+content=["']mJvU4cL8NtFHmsfDdDlir9eM406Hj0tHOQUpm2J_Vm0["']\s*/?>''',
+              re.IGNORECASE,
+          )
+
+          changed = []
+          total_matches = 0
+          for path in html_files:
+              text = path.read_text(encoding="utf-8")
+              matches = len(pattern.findall(text))
+              total_matches += matches
+              if matches:
+                  updated = pattern.sub("", text)
+                  path.write_text(updated, encoding="utf-8")
+                  changed.append(path.name)
+
+          if total_matches != len(html_files):
+              raise SystemExit(
+                  f"Expected exactly one verification meta tag in each of {len(html_files)} HTML files; found {total_matches} total matches"
+              )
+
+          for path in html_files:
+              text = path.read_text(encoding="utf-8")
+              if verification_value in text or 'name="google-site-verification"' in text or "name='google-site-verification'" in text:
+                  raise SystemExit(f"Verification tag still present in {path}")
+              if current_tag not in text:
+                  raise SystemExit(f"Current Google tag missing from {path}")
+
+          print(f"Removed google-site-verification from {len(changed)} HTML files: {', '.join(changed)}")
+          PY
+
+      - name: Remove one-shot workflow and commit cleanup
+        shell: bash
+        run: |
+          rm -- .github/workflows/remove-search-console-verification.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- beylikduzumasajsalonu/*.html .github/workflows/remove-search-console-verification.yml
+          git diff --cached --check
+          git commit -m "Remove Search Console verification meta from HTML pages"
+          git push origin HEAD:main
