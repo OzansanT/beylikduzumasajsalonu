@@ -1,0 +1,80 @@
+name: Remove legacy Google Analytics tag
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Remove G-F241NMVH9B from HTML pages
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          root = Path("beylikduzumasajsalonu")
+          html_files = sorted(root.glob("*.html"))
+          if not html_files:
+              raise SystemExit("No HTML files found")
+
+          legacy_id = "G-F241NMVH9B"
+          current_id = "GT-M6XWMHWS"
+          pattern = re.compile(
+              r'''\s*<!-- Google tag \(gtag\.js\) -->\s*'''
+              r'''<script async src=["']https://www\.googletagmanager\.com/gtag/js\?id=G-F241NMVH9B["']></script>\s*'''
+              r'''<script>\s*window\.dataLayer\s*=\s*window\.dataLayer\s*\|\|\s*\[\];\s*'''
+              r'''function gtag\(\)\s*\{\s*dataLayer\.push\(arguments\);\s*\}\s*'''
+              r'''gtag\('js',\s*new Date\(\)\);\s*'''
+              r'''gtag\('config',\s*'G-F241NMVH9B'\);\s*</script>''',
+              re.DOTALL,
+          )
+
+          changed = []
+          total_matches = 0
+          for path in html_files:
+              text = path.read_text(encoding="utf-8")
+              matches = len(pattern.findall(text))
+              total_matches += matches
+              if matches:
+                  updated = pattern.sub("", text)
+                  path.write_text(updated, encoding="utf-8")
+                  changed.append(path.name)
+
+          if total_matches != len(html_files):
+              raise SystemExit(
+                  f"Expected exactly one {legacy_id} block in each of {len(html_files)} HTML files; found {total_matches} total matches"
+              )
+
+          for path in html_files:
+              text = path.read_text(encoding="utf-8")
+              if legacy_id in text:
+                  raise SystemExit(f"Legacy tag still present in {path}")
+              if current_id not in text:
+                  raise SystemExit(f"Current tag missing from {path}")
+
+          print(f"Removed {legacy_id} from {len(changed)} HTML files: {', '.join(changed)}")
+          PY
+
+      - name: Remove one-shot workflow and commit cleanup
+        shell: bash
+        run: |
+          rm -- .github/workflows/remove-legacy-ga.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- beylikduzumasajsalonu/*.html .github/workflows/remove-legacy-ga.yml
+          git diff --cached --check
+          git commit -m "Remove legacy G-F241NMVH9B tag from HTML pages"
+          git push origin HEAD:main
