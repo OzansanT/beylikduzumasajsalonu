@@ -12,9 +12,17 @@
   <meta name="color-scheme" content="light">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="css/404.css">
+  <link rel="stylesheet" href="css/topbar.css">
 </head>
 <body>
   <a class="skip-link" href="#ana-icerik">İçeriğe geç</a>
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <p><span aria-hidden="true">●</span>Beylikdüzü / İstanbul</p>
+      <p class="topbar__hours">Her gün randevu ile hizmet</p>
+      <a href="tel:+905321519691" aria-label="0532 151 96 91 numarasını ara" onclick="gtag('event','phone_call_topbar',{'phone_number':'+905321519691'});">Randevu AL</a>
+    </div>
+  </div>
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="/" aria-label="Beylikdüzü Masaj Salonu ana sayfa">
@@ -76,7 +84,7 @@
         <strong>İletişim</strong>
         <a href="iletisim.html">Randevu ve ulaşım</a>
         <span>Beylikdüzü, İstanbul</span>
-        <a class="muted" href="tel:+905321519691">0532 151 96 91</a>
+        <a class="muted" href="tel:+905321519691" onclick="gtag('event','phone_call_footer',{'phone_number':'+905321519691'});">0532 151 96 91</a>
         <span class="muted">Randevu ile hizmet</span>
       </div>
     </div>
@@ -86,8 +94,8 @@
     </div>
   </footer>
   <nav class="mobile-actions" aria-label="Hızlı iletişim">
-    <a class="mobile-actions__call" href="tel:+905321519691">Ara</a>
-    <a class="mobile-actions__whatsapp" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow">WhatsApp</a>
+    <a class="mobile-actions__call" href="tel:+905321519691" onclick="gtag('event','phone_call_mobile',{'phone_number':'+905321519691'});">Ara</a>
+    <a class="mobile-actions__whatsapp" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow" onclick="gtag('event','whatsapp_click_mobile',{'phone_number':'+905321519691'});">WhatsApp</a>
   </nav>
   <script src="js/404.js" defer></script>
 </body>

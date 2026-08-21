@@ -36,7 +36,7 @@
     <div class="container topbar__inner">
       <p><span aria-hidden="true">●</span>Beylikdüzü / İstanbul</p>
       <p class="topbar__hours">Her gün randevu ile hizmet</p>
-      <a href="tel:+905321519691" aria-label="0532 151 96 91 numarasını ara">0532 151 96 91</a>
+      <a href="tel:+905321519691" aria-label="0532 151 96 91 numarasını ara" onclick="gtag('event','phone_call_topbar',{'phone_number':'+905321519691'});">Randevu AL</a>
     </div>
   </div>
   <header class="site-header">
@@ -84,8 +84,8 @@
         <p class="lead">Beylikdüzü’nde sunulan masaj hizmetlerini inceleyebilir, uygulama seçenekleri ve randevu planlaması hakkında detaylı bilgi almak için doğrudan iletişime geçebilirsiniz.
 </p>
         <div class="hero__actions">
-          <a class="button" href="tel:+905321519691">Hemen Ara</a>
-          <a class="button button--outline" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow">WhatsApp Randevu</a>
+          <a class="button" href="tel:+905321519691" onclick="gtag('event','phone_call_hero',{'phone_number':'+905321519691'});">Hemen Ara</a>
+          <a class="button button--outline" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow" onclick="gtag('event','whatsapp_click_hero',{'phone_number':'+905321519691'});">WhatsApp Randevu</a>
         </div>
         <ul class="hero__features" aria-label="Öne çıkan özellikler">
           <li>Uzman Terapistler</li>
@@ -210,7 +210,7 @@
         <h2>Beylikdüzü içinde randevulu hizmet</h2>
         <p>Telefon veya WhatsApp üzerinden ilgilendiğiniz hizmeti, tercih ettiğiniz günü ve saati paylaşarak randevu
           bilgisi alabilirsiniz.</p>
-        <div class="actions center-actions"><a class="button" href="tel:+905321519691">Hemen ara</a><a
+        <div class="actions center-actions"><a class="button" href="tel:+905321519691" onclick="gtag('event','phone_call_cta',{'phone_number':'+905321519691'});">Hemen ara</a><a
             class="button secondary" href="iletisim.html">İletişim bilgileri</a></div>
       </div>
     </section>
@@ -238,7 +238,7 @@
         <strong>İletişim</strong>
         <a href="iletisim.html">Randevu ve ulaşım</a>
         <span>Beylikdüzü, İstanbul</span>
-        <a class="muted" href="tel:+905321519691">0532 151 96 91</a>
+        <a class="muted" href="tel:+905321519691" onclick="gtag('event','phone_call_footer',{'phone_number':'+905321519691'});">0532 151 96 91</a>
         <span class="muted">Randevu ile hizmet</span>
       </div>
     </div>
@@ -248,8 +248,8 @@
     </div>
   </footer>
   <nav class="mobile-actions" aria-label="Hızlı iletişim">
-    <a class="mobile-actions__call" href="tel:+905321519691">Ara</a>
-    <a class="mobile-actions__whatsapp" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow">WhatsApp</a>
+    <a class="mobile-actions__call" href="tel:+905321519691" onclick="gtag('event','phone_call_mobile',{'phone_number':'+905321519691'});">Ara</a>
+    <a class="mobile-actions__whatsapp" href="https://wa.me/905321519691?text=Merhaba%2C%20masaj%20randevusu%20olu%C5%9Fturmak%20istiyorum.%20L%C3%BCtfen%20bilgi%20verebilir%20misiniz%3F" rel="nofollow" onclick="gtag('event','whatsapp_click_mobile',{'phone_number':'+905321519691'});">WhatsApp</a>
   </nav>
   <script>(()=>{"use strict";const e=document.querySelector(".nav-menu");if(!e)return;const t=e.querySelector(".menu-toggle"),n=e.querySelector(".menu-backdrop"),o=e.querySelector(".site-nav"),a=[...e.querySelectorAll(".site-nav a")],i=window.matchMedia("(max-width:850px)"),r=[document.querySelector(".skip-link"),e.parentElement?.querySelector(".brand"),document.querySelector("main"),document.querySelector("footer")].filter(Boolean),s="inert"in HTMLElement.prototype;let l=false;const d=e=>{r.forEach(t=>{if(s)t.inert=e;if(e){t.dataset.menuAriaHidden=t.getAttribute("aria-hidden")||"";t.setAttribute("aria-hidden","true")}else{const e=t.dataset.menuAriaHidden;e?t.setAttribute("aria-hidden",e):t.removeAttribute("aria-hidden"),delete t.dataset.menuAriaHidden}})},c=()=>[...e.querySelectorAll('a[href],button:not([disabled]):not([tabindex="-1"]),summary,[tabindex]:not([tabindex="-1"])')].filter(e=>e.getAttribute("aria-hidden")!=="true"&&e.getClientRects().length>0),m=(a,r=false)=>{const s=!!(a&&i.matches);e.classList.toggle("is-open",s),t?.setAttribute("aria-expanded",String(s)),document.documentElement.classList.toggle("menu-is-open",s),d(s),l=r,s?requestAnimationFrame(()=>o?.querySelector("a,summary")?.focus()):l&&(t?.focus(),l=false)};t?.addEventListener("click",()=>m(!e.classList.contains("is-open"),true)),n?.addEventListener("click",()=>m(false,true)),a.forEach(e=>e.addEventListener("click",()=>m(false))),document.addEventListener("keydown",t=>{if(!e.classList.contains("is-open"))return;if(t.key==="Escape")return t.preventDefault(),void m(false,true);if(t.key!=="Tab")return;const n=c();if(!n.length)return;const o=n[0],a=n[n.length-1];t.shiftKey&&document.activeElement===o?(t.preventDefault(),a.focus()):!t.shiftKey&&document.activeElement===a&&(t.preventDefault(),o.focus())});const u=()=>{i.matches||m(false)};i.addEventListener?.("change",u),u()})();</script>
 
